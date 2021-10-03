@@ -11,19 +11,20 @@ string randomClient();
 int getNumeroAleatorio(int i, int j);
 void segundoPasa();
 void cajero();
+void atenderCliente();
 Cola cola;
 
 int seconds, segundosParaLlegar, segundosParaDespachar, clientCount;
 string cliente;
 
-string names[25] = {
-	"a", "b", "c", "d", "e",
-	"f", "g", "h", "i", "j",
-	"k", "l", "m", "n", "o",
-	"p", "q", "r", "s", "t",
-	"u", "v", "w", "x", "y",
+string names[26] = {
+	"Alicia", "Bernardo", "Camila", "David", "Emilia",
+	"Fernando", "Gerardo", "Helena", "Ignacio", "Jimena",
+	"Kevin", "Linda", "Marcus", "Nayeli", "Octavio",
+	"Perla", "Quentin", "Rosa", "Salvador", "Teresa",
+	"Ubaldo", "Victoria", "Walter", "Xochitl", "Yuridia",
+	"Zacarias"
 };
-
 int main(){
 	srand(time(NULL));
 	cola.inicializar();
@@ -32,7 +33,6 @@ int main(){
 
 	return 0;
 }
-
 void cajero(){
 	if (seconds == 60){
 		cout<<"\n--------------------------------\n";
@@ -50,17 +50,12 @@ void cajero(){
 			cola.push(randomClient());
 			segundosParaLlegar = getNumeroAleatorio(4,2);
 		}
-		
 		if (cliente == ""){
-			cliente = cola.getFrente();
-			cola.pop();
-			segundosParaDespachar = getNumeroAleatorio(5,3);
+			atenderCliente();
 			segundosParaLlegar = getNumeroAleatorio(4,2);
 		}
 		if (segundosParaDespachar == 0){
-			cliente = cola.getFrente();
-			cola.pop();
-			segundosParaDespachar = getNumeroAleatorio(5,3);
+			atenderCliente();
 			++clientCount;
 		}
 		cout<<"Despachando: "<<cliente<<endl;
@@ -75,6 +70,12 @@ void cajero(){
 	}
 }
 
+void atenderCliente(){
+	cliente = cola.getFrente();
+	cola.pop();
+	segundosParaDespachar = getNumeroAleatorio(5,3);
+}
+
 void segundoPasa(){
 	++seconds; 
 	--segundosParaLlegar;
@@ -82,9 +83,8 @@ void segundoPasa(){
 }
 
 string randomClient(){
-	return names[ getNumeroAleatorio(25,0) ];
+	return names[ getNumeroAleatorio(26,0) ];
 }
-
 
 int getNumeroAleatorio(int i, int j){ // max-1, min
 	return (rand() % (--i) + j);
